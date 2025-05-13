@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="altService.sys.member.service.impl.MemberMapper">
+
+	<sql id="search">
+		<if test="searchType != null and (searchType != '') and (keyword != null) and (keyword !='')">
+			<if test="searchType == 'id'.toString()">
+				AND (emplyr_id LIKE CONCAT('%',#{keyword},'%'))
+			</if>
+			<if test="searchType == 'user_nm'.toString()">
+				AND (user_nm LIKE CONCAT('%',#{keyword},'%'))
+			</if>
+		</if>
+		<if test="(stts != null and stts != '')">
+			AND (emplyr_sttus_code = #{stts})
+		</if>
+	</sql>
+	
+	<select id="login" parameterType="memberManage" resultType="memberManage">
+		SELECT *
+		FROM altservice.comtnemplyrinfo
+		WHERE emplyr_id = #{emplyr_id}
+		AND password = #{password}
+	</select>
+
+	<insert id="insertMemberManage" parameterType="memberManage">
+<!-- 		INSERT INTO -->
+<!-- 		altservice.comtnemplyrinfo -->
+<!-- 		(emplyr_id, user_nm, password,password_hint, -->
+<!-- 		 password_cnsr, area_no, sexdstn_code, email_adres, -->
+<!-- 		house_middle_telno, house_end_telno, house_adres, zip, emplyr_sttus_code, sbscrb_de) -->
+<!-- 		VALUES -->
+<!-- 		(#{emplyr_id}, #{user_nm}, #{password}, #{password_hint}, -->
+<!-- 		#{password_cnsr}, #{area_no}, #{sexdstn_code}, #{email_adres} -->
+<!-- 		#{house_middle_telno}, #{house_end_telno}, #{house_adres}, #{zip}, 'r', now()) -->
+		INSERT INTO altservice.comtnemplyrinfo
+		(emplyr_id, user_nm, password, sexdstn_code, house_adres,
+		 password_hint, password_cnsr, house_end_telno, area_no, detail_adres, zip, 
+		 email_adres,  house_middle_telno,  moblphon_no, emplyr_sttus_code, sbscrb_de, delete_at, lock_cnt,
+		 empl_no)
+		VALUES 
+		(#{emplyr_id}, #{user_nm}, #{password}, #{sexdstn_code}, #{house_adres}, 
+		 #{password_hint}, #{password_cnsr}, #{house_end_telno}, #{area_no}, #{detail_adres}, #{zip},
+		 #{email_adres}, #{house_middle_telno}, #{moblphon_no}, 'n', now(), 'n', 0,
+		 (SELECT COALESCE(COUNT(*) + 1,1) as empl_no FROM altservice.comtnemplyrinfo c)
+		)
+	</insert>
+
+	<select id="selectMemberManageList" parameterType="cri"	resultType="memberManage">
+		SELECT @RNUM:=@RNUM-1 AS list_no, c.emplyr_id, c.orgnzt_id, c.user_nm, c.email_adres, c.area_no, c.house_middle_telno, c.house_end_telno, IF(c.lock_cnt >= 5,'잠김', IF(c.emplyr_sttus_code = 'n', '미승인', IF(c.emplyr_sttus_code = 'a', '승인',''))) AS emplyr_sttus_code, c.sbscrb_de, c.moblphon_no
+		FROM (SELECT @RNUM:=(SELECT COUNT(*) - #{offset} + 1 FROM altservice.comtnemplyrinfo WHERE delete_at = 'n'	<include refid="search" />)) r, altservice.comtnemplyrinfo c
+		WHERE delete_at = 'n'
+		<include refid="search" />
+		ORDER BY c.sbscrb_de DESC, c.empl_no DESC
+		LIMIT #{perPageNum} OFFSET #{offset}
+	</select>
+
+	<select id="selectMemberManageListCnt" parameterType="cri" resultType="int">
+		SELECT COUNT(*) as cnt
+		FROM altservice.comtnemplyrinfo
+		WHERE delete_at = 'n'
+		<include refid="search" />
+	</select>
+
+	<select id="selectMemberManageDetail"
+		parameterType="memberManage" resultType="memberManage">
+		SELECT *
+		FROM	altservice.comtnemplyrinfo
+		WHERE emplyr_id = #{emplyr_id}
+	</select>
+	
+	<delete id="deleteMemberManage" parameterType="str">
+		UPDATE altservice.comtnemplyrinfo
+		SET DELETE_AT = 'Y'
+		WHERE emplyr_id = #{emplyr_id}
+	</delete>
+	
+	<select id="selectCheckDupleId" parameterType="str" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM altservice.comtnemplyrinfo
+		WHERE emplyr_id = #{emplyr_id}
+	</select>
+	
+	<update id="updateMemberManage" parameterType="memberManage">
+		UPDATE altservice.comtnemplyrinfo
+		SET
+		user_nm = #{user_nm},
+		sexdstn_code = #{sexdstn_code},
+		area_no = #{area_no},
+		house_middle_telno = #{house_middle_telno},
+		house_end_telno = #{house_end_telno},
+		email_adres = #{email_adres},
+		detail_adres = #{detail_adres},
+		emplyr_sttus_code = #{emplyr_sttus_code},
+		lock_cnt = #{lock_cnt}
+		WHERE emplyr_id = #{emplyr_id}
+	</update>
+	
+	<update id="updateMemberLockCnt" parameterType="str">
+		UPDATE altservice.comtnemplyrinfo
+		SET lock_cnt = lock_cnt + 1
+		WHERE emplyr_id = #{emplyr_id}
+	</update>
+	
+	<select id="selectMemberLockCnt" parameterType="str" resultType="int">
+		SELECT lock_cnt
+		FROM altservice.comtnemplyrinfo
+		WHERE emplyr_id = #{emplyr_id}
+	</select>
+</mapper>

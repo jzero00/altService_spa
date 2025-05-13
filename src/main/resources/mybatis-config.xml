@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="java.lang.String" alias="str"/>
+		<typeAlias type="java.lang.Integer" alias="int"/>
+		<typeAlias type="java.util.HashMap" alias="paramMap"/>
+		<typeAlias type="java.util.Map" alias="map"/>
+		
+		
+		<typeAlias type="altService.utils.SearchCriteria" alias="cri"/>
+		
+		
+		<typeAlias type="altService.sys.member.service.MemberVO" alias="member"/>
+		<typeAlias type="altService.sys.menuManage.service.MenuManageVO" alias="menuManage"/>
+		<typeAlias type="altService.sys.member.service.MemberManageVO" alias="memberManage"/>
+		
+	</typeAliases>
+</configuration>

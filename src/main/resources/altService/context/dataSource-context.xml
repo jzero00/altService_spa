@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- HikariCP connection pool bean setting -->
+	<bean id="hikariConfig"
+		  class="com.zaxxer.hikari.HikariConfig"
+	      p:driverClassName="${driverClassName}"
+	      p:jdbcUrl="${jdbcUrl}"
+	      p:username="${user}"
+	      p:password="${password}"
+	      />
+	
+	<!-- connection pool을 사용할 dataSource bean setting -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method ="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+	
+	<!-- DB connection 및 SQL 전달/리턴을 위한 SQLSession을 만들어내는 SQLSessionFactory bean setting -->
+	<!-- mybatis SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml" />
+    	<property name="mapperLocations" value="classpath:/mappers/*Mapper.xml" />
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	
+	<mybatis-spring:scan base-package="altService.**.**.service.impl" />	      
+</beans>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="altService.sys.menuManage.service.impl.MenuManageMapper">
+
+	<insert id="insertMenuManage" parameterType="menuManage">
+		INSERT INTO	altservice.comtnmenuinfo
+		(menu_nm, progrm_file_nm, menu_no,upper_menu_no, menu_ordr, menu_dc,relate_image_path, relate_image_nm)
+		VALUES
+		(#{menu_nm}, #{progrm_file_nm}, #{menu_no}, #{upper_menu_no}, #{menu_ordr}, #{menu_dc}, #{relate_image_path}, #{relate_image_nm})
+	</insert>
+	
+	<select id="selectUpperMenuNoByMenuOrdr" parameterType="str" resultType="str">
+	
+	</select>
+	
+	<select id="selectUpperMenuNoByMenuNm" parameterType="str" resultType="menuManage">
+		SELECT *
+		FROM altservice.comtnmenuinfo
+		WHERE 1=1
+		AND
+		menu_nm LIKE CONCAT('%',#{keyword},'%')
+	</select>
+	
+	<select id="selectMenuList" parameterType="cri" resultType="menuManage">
+		SELECT *
+		FROM altservice.comtnmenuinfo
+	</select>
+	
+	<select id="selectMenuManageDetail" resultType="menuManage">
+		SELECT *
+		FROM altservice.comtnmenuinfo
+		WHERE 1=1 
+		AND
+		menu_no = #{menu_no}
+	</select>
+	
+	<select id="selectMenuManageDetailForCheck" parameterType="menuManage" resultType="int">
+		SELECT COUNT(*)	
+		FROM altservice.comtnmenuinfo
+		WHERE 1=1
+		AND menu_no = #{menu_no}
+		AND menu_nm = #{menu_nm}
+	</select>
+	
+	<update id="updateMenuManage" parameterType="menuManage">
+		UPDATE altservice.comtnmenuinfo
+		SET
+		menu_nm = #{menu_nm},
+		progrm_file_nm = #{progrm_file_nm},
+		upper_menu_no = #{upper_menu_no},
+		menu_ordr = #{menu_ordr},
+		menu_dc = #{menu_dc},
+		relate_image_path = #{relate_image_path},
+		relate_image_nm = #{relate_image_nm}
+		WHERE MENU_NO = #{menu_no} 
+	</update>
+	
+	<select id="selectMenuManageListCnt" parameterType="cri" resultType="int">
+		SELECT COUNT(*)
+		FROM altservice.comtnmenuinfo
+		WHERE 1=1
+	</select>
+
+</mapper>
