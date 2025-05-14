@@ -16,20 +16,32 @@
 	});
 
 	function modifyMember() {
-		document.memberVO.action = "<c:url value="/sys/memberMod.do"/>";
-		memberVO.submit();
+		/* document.memberVO.action = "<c:url value="/sys/memberMod.do"/>";
+		memberVO.submit(); */
+		let formData = $("#form").serialize();
+		$.ajax({
+			url : "/sys/memberMod.do",
+			data : formData,
+			type : "post",
+			success : function(res){
+				console.log(res);
+				alert("사용자 등록 완료되었습니다.");
+				getUrl("/sys/memberManage.do");
+			}
+		});
 	}
 	
 	
 	function listMenu() {
-		document.memberVO.action = "<c:url value="/sys/memberManage.do"/>";
-		memberVO.submit();
+		/* document.memberVO.action = "<c:url value="/sys/memberManage.do"/>";
+		memberVO.submit(); */
+		getUrl("'/sys/memberManage.do'");
 	}
 </script>
 </head>
 <body>
 	<section class="content">
-		<form name="memberVO" action="" method="post">
+		<form name="memberVO" action="" method="post" id="form">
 			<div class="container-fluid">
 				<div class="card card-info">
 					<div class="card-header">
