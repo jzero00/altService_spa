@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="altService.sys.auth.service.impl.AuthMapper">
+
+	<select id="selectAuthManageList" parameterType="cri" resultType="authManage">
+		SELECT *
+		FROM altservice.comtnauthorinfo
+		WHERE 1=1
+	</select>
+	
+	<select id="selectAuthManageListCnt" parameterType="cri" resultType="int">
+		SELECT COUNT(*)
+		FROM altservice.comtnauthorinfo
+		WHERE 1=1
+	</select>
+</mapper>
