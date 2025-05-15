@@ -25,7 +25,7 @@
 			type : "post",
 			success : function(res){
 				console.log(res);
-				alert("사용자 등록 완료되었습니다.");
+				alert("사용자 수정 완료되었습니다.");
 				getUrl("/sys/memberManage.do");
 			}
 		});

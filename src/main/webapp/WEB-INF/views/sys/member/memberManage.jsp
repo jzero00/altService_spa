@@ -121,47 +121,19 @@
 		
 		let formData = $("#form").serialize();
 		postUrl("/sys/memberManage.do",formData);
-/* 		$.ajax({
-			url : "/sys/memberManage.do",
-			data : formData,
-			type : "post",
-			success : function(res) {
-				$("#content").html(res);
-			}
-		}); */
-// 		document.memberManageVO.action = "<c:url value='/sys/memberManage.do'/>";
-// 		memberManageVO.submit();
 	}
 
 	function resetMember() {
 		getUrl("'/sys/memberManage.do'");
-/* 		$.ajax({
-			url : '/sys/memberManage.do',
-			type : "get",
-			success : function(res) {
-				$("#content").html(res);
-			}
-		}) */
-// 		location.href = "<c:url value='/sys/memberManage.do'/>";
 	}
 
 	function search_list_go(pageNo) {
 		document.memberManageVO.querySelector("input[name=page]").value = pageNo;
 		let formData = $("#form").serialize();
 		postUrl("/sys/memberManage.do",formData);
-/* 		$.ajax({
-			url : "/sys/memberManage.do",
-			data : formData,
-			type : "post",
-			success : function(res) {
-				$("#content").html(res);
-			}
-		}); */
 	}
 
 	function registMember() {
-/* 		document.memberManageVO.action = "<c:url value='/sys/memberRegView.do'/>";
-		memberManageVO.submit(); */
 		getUrl("/sys/memberRegView.do");
 	}
 
@@ -175,21 +147,23 @@
 			let tr = '';
 			let deletedIds = new Array();
 			console.log(checkedBoxes);
-			for (i = 0; i < checkedBoxes.length; i++) {
+			for (i = 0; i < checkedBoxes.length - 1; i++) {
 				tr = checkedBoxes[i].parentElement.parentElement;
-				// 			console.log(tr);
+				console.log(tr);
+				console.log(tr.querySelector("td:nth-child(3)").innerHTML);
 				deletedIds.push(tr.querySelector("td:nth-child(3)").innerHTML);
 			}
 			console.log(deletedIds);
 
-			$.ajax({
+ 			$.ajax({
 				url : '/sys/memberDelete.do',
 				method : 'post',
 				data : {
 					'id' : deletedIds.toString()
 				},
 				success : function(data) {
-					console.log(data);
+					alert("삭제 완료했습니다.");
+					getUrl("/sys/memberManage.do");
 				},
 				error : function(request, status, error) {
 					alert("code:" + request.status + "\n" + "message:"
@@ -207,7 +181,6 @@
 	}
 
 	function registMemberExcel() {
-// 		location.href = "/sys/insertMemberManageExcelView.do";
 		getUrl("/sys/registMemberManageExcelView.do");
 	}
 </script>
