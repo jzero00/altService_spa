@@ -34,7 +34,7 @@
 						<td class="text-center">${list.author_nm }</td>
 						<td class="text-center">${list.author_dc }</td>
 						<td class="text-center"><fmt:formatDate value="${list.author_creat_de }" pattern="yyyy-MM-dd" /></td>
-						<td class="text-center">돋보기 아이콘</td>
+						<td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
 					</tr>
 				</c:forEach>
 			</tbody>
