@@ -2,10 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="altService.sys.role.service.impl.RoleManageMapper">
 	
+	<sql id="search">
+		<if test="keyword != null and (keyword !='')">
+			AND (role_nm LIKE CONCAT ('%',#{keyword},'%'))
+		</if>
+	</sql>
+	
 	<select id="selectRoleManageList" parameterType="cri" resultType="role">
 		SELECT *
 		FROM altservice.comtnroleinfo
 		WHERE 1=1
+		<include refid="search" />
 		LIMIT #{perPageNum} OFFSET #{offset}
 	</select>
 	
@@ -13,5 +20,19 @@
 		SELECT COUNT(*)
 		FROM altservice.comtnroleinfo
 		WHERE 1=1
+		<include refid="search" />
+	</select>
+	
+	<insert id="insertRoleManage" parameterType="role">
+	INSERT INTO altservice.comtnroleinfo
+	(role_code, role_nm, role_pttrn, role_dc, role_ty, role_sort, role_creat_de)
+	VALUES
+	(#{role_code}, #{role_nm}, #{role_pttrn}, #{role_dc}, #{role_ty}, #{role_sort}, now())
+	</insert>
+	
+	<select id="selectRoleManageDetail" parameterType="role" resultType="role">
+		SELECT *
+		FROM altservice.comtnroleinfo
+		WHERE role_code = #{role_code}
 	</select>
 </mapper>

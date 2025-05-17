@@ -39,4 +39,17 @@ public class RoleManageServiceImpl implements RoleManageService {
 		return dataMap;
 	}
 
+	@Override
+	public RoleManageVO getRoleManageDetail(RoleManageVO vo) throws SQLException {
+		RoleManageVO resVO = null;
+		resVO = rMapper.selectRoleManageDetail(vo);
+		return resVO;
+	}
+
+	@Override
+	public void registRoleManage(Map<String, Object> paramMap) throws SQLException {
+		RoleManageVO vo = (RoleManageVO) paramMap.get("vo");
+		rMapper.insertRoleManage(vo);
+	}
+
 }

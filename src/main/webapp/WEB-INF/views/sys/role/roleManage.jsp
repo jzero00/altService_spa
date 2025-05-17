@@ -20,13 +20,13 @@
 						</div>
 						<div class="col-3">
 							<div class="btn-group">
-								<button type="button" class="btn bg-gradient-primary" onclick="searchMember(); return false;">조회</button>
+								<button type="button" class="btn bg-gradient-primary" onclick="searchRole(); return false;">조회</button>
 							</div>
 							<div class="btn-group">
 								<button type="button" class="btn bg-gradient-primary" onclick="searchMember(); return false;">삭제</button>
 							</div>
 							<div class="btn-group">
-								<button type="button" class="btn bg-gradient-primary" onclick="searchMember(); return false;">등록</button>
+								<button type="button" class="btn bg-gradient-primary" onclick="registRole(); return false;">등록</button>
 							</div>
 						</div>
 					</div>
@@ -57,7 +57,8 @@
 						<td class="text-center">${list.role_dc }</td>
 						<td class="text-center"><fmt:formatDate value="${list.role_creat_de }" pattern="yyyy-MM-dd" /></td>
 						<td class="text-center">
-							<a href="#" class="text-muted" onclick="getRole(this,event)">
+<!-- 							<a href="#" class="text-muted" onclick="getRole(this,event)"> -->
+							<a href="#" class="text-muted">
 	                        <i class="fas fa-search"></i>
 	                        </a>
                         </td>
@@ -65,9 +66,8 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<form name="authManageVO" method="post" id="form">
+		<form name="roleManageVO" method="post" id="form">
 			<input type='hidden' name="page" value="${pageMaker.cri.page }" />
-			<input type="hidden" id="searchType" name="searchType" value="${cri.searchType }">
 			<input type="hidden" id="keyword" name="keyword" value="${cri.keyword }">
 <!-- 			<input type="hidden" id="id" name="id" value=""> -->
 <%-- 			<input type="hidden" id="stts" name="stts" value="${cri.stts }"> --%>
@@ -78,46 +78,36 @@
 	</div>
 </body>
 <script>
-	function getAuthDtl(e) {
-/* 		let id = e.querySelector("td[id=id]").innerHTML;
-		let data = {"id" : id};
-		postUrl("/sys/memberDtl.do",data); */
+	function getRoleDtl(e) {
+		let role_code = $(e).children("td#id").text();
+		let data = {"role_code" : role_code};
+		postUrl("/sys/roleManageDtl.do",data);
 	}
 	
-	function getRole(e, event){
-		event.preventDefault();
-		console.log($(e).closest("tr").children("td").eq(1).text());
-		let author = $(e).closest("tr").children("td").eq(1).text();
-		let data = {"author" : author};
-		post("/sys/authorRoleList.do", data);
-	}
+// 	function getRole(e, event){
+// 		event.preventDefault();
+// 		console.log($(e).closest("tr").children("td").eq(1).text());
+// 		let author = $(e).closest("tr").children("td").eq(1).text();
+// 		let data = {"author" : author};
+// 		post("/sys/authorRoleList.do", data);
+// 	}
 
-	function searchMember() {
-		let searchType = document.querySelector("select[id=searchType]").value;
+	function searchRole() {
 		let keyword = document.querySelector("input[id=keyword]").value;
-		let emplyrSttusCode = document	.querySelector("select[id=emplyrSttusCode]").value;
-
-		document.memberManageVO.querySelector("input[id=searchType]").value = searchType;
-		document.memberManageVO.querySelector("input[id=keyword]").value = keyword;
-		document.memberManageVO.querySelector("input[id=stts]").value = emplyrSttusCode;
-
+		document.roleManageVO.querySelector("input[id=keyword]").value = keyword;
 		
 		let formData = $("#form").serialize();
-		postUrl("/sys/memberManage.do",formData);
-	}
-
-	function resetMember() {
-		getUrl("'/sys/memberManage.do'");
+		postUrl("/sys/roleManage.do",formData);
 	}
 
 	function search_list_go(pageNo) {
-		document.memberManageVO.querySelector("input[name=page]").value = pageNo;
+		document.roleManageVO.querySelector("input[name=page]").value = pageNo;
 		let formData = $("#form").serialize();
-		postUrl("/sys/memberManage.do",formData);
+		postUrl("/sys/roleManage.do",formData);
 	}
 
-	function registMember() {
-		getUrl("/sys/memberRegView.do");
+	function registRole() {
+		getUrl("/sys/roleManageRegView.do");
 	}
 
 	function checkbox(e, event) {
@@ -155,14 +145,6 @@
 				}
 			});
 		}
-	}
-
-	function downloadExcelMember() {
-		location.href = "/download/memberManageExcel.do";
-	}
-
-	function registMemberExcel() {
-		getUrl("/sys/registMemberManageExcelView.do");
 	}
 </script>
 </html>

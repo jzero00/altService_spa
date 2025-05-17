@@ -1,14 +1,19 @@
 package altService.sys.role.web;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import altService.sys.role.service.RoleManageService;
+import altService.sys.role.service.RoleManageVO;
 import altService.utils.SearchCriteria;
 
 @RequestMapping("/sys")
@@ -28,6 +33,70 @@ public class RoleController {
 		try {
 			dataMap = rService.getRoleManageList(cri);
 			mnv.addAllObjects(dataMap);
+			mnv.setViewName(url);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mnv;
+	}
+	
+	@RequestMapping("/roleManageRegView.do")
+	public ModelAndView getRoleManageRegView(ModelAndView mnv) {
+		String url = rootView + "roleManageReg";
+		mnv.setViewName(url);
+		return mnv;
+	}
+	
+	@PostMapping("/roleManageReg.do")
+	@ResponseBody
+	public Map<String, Object> roleManageReg(RoleManageVO vo){
+		Map<String, Object> paramMap = new HashMap<>();
+		Map<String, Object> resMap = new HashMap<>();
+		paramMap.put("vo", vo);
+		
+		try {
+			rService.registRoleManage(paramMap);
+			resMap.put("status", HttpStatus.OK);
+		} catch (SQLException e) {
+			resMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return resMap;
+	}
+	
+	
+	@PostMapping("/roleManageDtl.do")
+	public ModelAndView getRoleManageDtl(ModelAndView mnv, String role_code) {
+		String url = rootView + "roleManageDtl";
+		RoleManageVO reqVO = new RoleManageVO();
+		reqVO.setRole_code(role_code);
+		
+		RoleManageVO resVO = null;
+		try {
+			resVO = rService.getRoleManageDetail(reqVO);
+			mnv.addObject("vo", resVO);
+			mnv.setViewName(url);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mnv;
+	}
+	
+	@PostMapping("/roleManageModView.do")
+	public ModelAndView modifyRoleManageView(ModelAndView mnv, String role_code) {
+		String url = rootView + "roleManageMod";
+		RoleManageVO reqVO = new RoleManageVO();
+		reqVO.setRole_code(role_code);
+		
+		RoleManageVO resVO = null;
+		
+		try {
+			resVO = rService.getRoleManageDetail(reqVO);
+			mnv.addObject("vo", resVO);
 			mnv.setViewName(url);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

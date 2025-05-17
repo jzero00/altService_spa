@@ -7,9 +7,13 @@ import altService.sys.role.service.RoleManageVO;
 import altService.utils.SearchCriteria;
 
 public interface RoleManageMapper {
+	
+	public void insertRoleManage(RoleManageVO vo) throws SQLException;
 
 	public List<RoleManageVO> selectRoleManageList(SearchCriteria cri) throws SQLException;
 	
 	public int selectRoleManageListCnt(SearchCriteria cri) throws SQLException;
+
+	public RoleManageVO selectRoleManageDetail(RoleManageVO vo) throws SQLException;
 	
 }
