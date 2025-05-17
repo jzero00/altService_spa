@@ -23,7 +23,8 @@
 						<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
 							<li><a href="#" onclick="getUrl('/sys/menuManage.do')" class="dropdown-item">메뉴관리</a></li>
 							<li><a href="#" onclick="getUrl('/sys/memberManage.do')" class="dropdown-item">사용자관리</a></li>
-							<li><a href="#" onclick="getUrl('/sys/authManage.do')" class="dropdown-item">권한관리</a></li>
+							<li><a href="#" onclick="getUrl('/sys/authorManage.do')" class="dropdown-item">권한관리</a></li>
+							<li><a href="#" onclick="getUrl('/sys/roleManage.do')" class="dropdown-item">롤관리</a></li>
 							<li class="dropdown-divider"></li>
 							<!-- Level two dropdown-->
 							<!-- 							<li class="dropdown-submenu dropdown-hover"><a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Hover for action</a>

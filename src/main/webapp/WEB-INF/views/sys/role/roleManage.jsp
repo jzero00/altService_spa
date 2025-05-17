@@ -9,8 +9,26 @@
 			<tr>
 				<th>
 					<div class="row">
-						<div class="col-4">권한관리 목록</div>
-						<div class="col-8">권한명 검색창</div>
+						<div class="col-6">롤관리 목록</div>
+						<div class="col-3">
+							<div class="form-group row">
+								<label for="menu" class="col-sm-4 col-form-label">롤명 : </label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="keyword" value="${cri.keyword }">
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="btn-group">
+								<button type="button" class="btn bg-gradient-primary" onclick="searchMember(); return false;">조회</button>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="btn bg-gradient-primary" onclick="searchMember(); return false;">삭제</button>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="btn bg-gradient-primary" onclick="searchMember(); return false;">등록</button>
+							</div>
+						</div>
 					</div>
 				</th>
 			</tr>
@@ -19,32 +37,40 @@
 			<thead>
 				<tr>
 					<th class="text-center" style="width: 10px"><input type="checkbox"></th>
-					<th class="text-center">권한 ID</th>
-					<th class="text-center">권한명</th>
-					<th class="text-center">설명</th>
+					<th class="text-center">롤 ID</th>
+					<th class="text-center">롤명</th>
+					<th class="text-center">롤 타입</th>
+					<th class="text-center">롤 sort</th>
+					<th class="text-center">롤 설명</th>
 					<th class="text-center">등록일</th>
-					<th class="text-center">롤정보</th>
+					<th class="text-center"></th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${list}" var="list">
-					<tr id="" onclick="memberManageDtl(this); return false;">
+					<tr id="" onclick="getRoleDtl(this); return false;">
 						<td class="text-center"><input type="checkbox" onclick="checkbox(this,event)"></td>
-						<td class="text-center" id="id">${list.author_code }</td>
-						<td class="text-center">${list.author_nm }</td>
-						<td class="text-center">${list.author_dc }</td>
-						<td class="text-center"><fmt:formatDate value="${list.author_creat_de }" pattern="yyyy-MM-dd" /></td>
-						<td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
+						<td class="text-center" id="id">${list.role_code }</td>
+						<td class="text-center">${list.role_nm }</td>
+						<td class="text-center">${list.role_ty }</td>
+						<td class="text-center">${list.role_pttrn }</td>
+						<td class="text-center">${list.role_dc }</td>
+						<td class="text-center"><fmt:formatDate value="${list.role_creat_de }" pattern="yyyy-MM-dd" /></td>
+						<td class="text-center">
+							<a href="#" class="text-muted" onclick="getRole(this,event)">
+	                        <i class="fas fa-search"></i>
+	                        </a>
+                        </td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		<form name="memberManageVO" method="post" id="form">
+		<form name="authManageVO" method="post" id="form">
 			<input type='hidden' name="page" value="${pageMaker.cri.page }" />
 			<input type="hidden" id="searchType" name="searchType" value="${cri.searchType }">
 			<input type="hidden" id="keyword" name="keyword" value="${cri.keyword }">
-			<input type="hidden" id="id" name="id" value="">
-			<input type="hidden" id="stts" name="stts" value="${cri.stts }">
+<!-- 			<input type="hidden" id="id" name="id" value=""> -->
+<%-- 			<input type="hidden" id="stts" name="stts" value="${cri.stts }"> --%>
 		</form>
 		<ul class="pagination m-0 justify-content-center">
 			<%@include file="/WEB-INF/views/include/pagination.jsp"%>
@@ -52,10 +78,18 @@
 	</div>
 </body>
 <script>
-	function memberManageDtl(e) {
-		let id = e.querySelector("td[id=id]").innerHTML;
+	function getAuthDtl(e) {
+/* 		let id = e.querySelector("td[id=id]").innerHTML;
 		let data = {"id" : id};
-		postUrl("/sys/memberDtl.do",data);
+		postUrl("/sys/memberDtl.do",data); */
+	}
+	
+	function getRole(e, event){
+		event.preventDefault();
+		console.log($(e).closest("tr").children("td").eq(1).text());
+		let author = $(e).closest("tr").children("td").eq(1).text();
+		let data = {"author" : author};
+		post("/sys/authorRoleList.do", data);
 	}
 
 	function searchMember() {
@@ -115,10 +149,8 @@
 					getUrl("/sys/memberManage.do");
 				},
 				error : function(request, status, error) {
-					alert("code:" + request.status + "\n" + "message:"
-							+ request.responseText + "\n" + "error:" + error);
+					alert("code:" + request.status + "\n" + "message:"	+ request.responseText + "\n" + "error:" + error);
 					var err = JSON.parse(request.responseText);
-
 					alert(err.resData[0].errorMsg);
 				}
 			});

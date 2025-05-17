@@ -1,4 +1,4 @@
-package altService.sys.auth.web;
+package altService.sys.role.web;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -8,32 +8,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import altService.sys.auth.service.AuthManageService;
+import altService.sys.role.service.RoleManageService;
 import altService.utils.SearchCriteria;
 
 @RequestMapping("/sys")
 @Controller
-public class AuthManageController {
-
-	private final String rootView = "/sys/auth/";
+public class RoleController {
 	
 	@Autowired
-	private AuthManageService aService;
+	private RoleManageService rService;
 	
-	@RequestMapping("/authManage.do")
-	public ModelAndView authManage(ModelAndView mnv, SearchCriteria cri) {
-		String url = rootView + "authManage";
+	private final String rootView = "/sys/role/";
+
+	@RequestMapping("/roleManage.do")
+	public ModelAndView getRoleManage(ModelAndView mnv, SearchCriteria cri) {
+		String url = rootView + "roleManage";
 		Map<String, Object> dataMap = null;
 		
 		try {
-			dataMap = aService.getAuthManageList(cri);
+			dataMap = rService.getRoleManageList(cri);
 			mnv.addAllObjects(dataMap);
+			mnv.setViewName(url);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		mnv.setViewName(url);
 		return mnv;
 	}
 }

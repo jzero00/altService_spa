@@ -72,12 +72,12 @@ public class MemberController {
 		try {
 			dataMap = mService.getMemberManageList(cri);
 			mnv.addAllObjects(dataMap);
+			mnv.setViewName(url);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		mnv.setViewName(url);
 		return mnv;
 	}
 

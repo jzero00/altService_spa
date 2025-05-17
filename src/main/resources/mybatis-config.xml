@@ -14,7 +14,8 @@
 		<typeAlias type="altService.sys.member.service.MemberVO" alias="member"/>
 		<typeAlias type="altService.sys.menuManage.service.MenuManageVO" alias="menuManage"/>
 		<typeAlias type="altService.sys.member.service.MemberManageVO" alias="memberManage"/>
-		<typeAlias type="altService.sys.auth.service.AuthManageVO" alias="authManage"/>
+		<typeAlias type="altService.sys.author.service.AuthorManageVO" alias="authManage"/>
+		<typeAlias type="altService.sys.role.service.RoleManageVO" alias="role"/>
 		
 	</typeAliases>
 </configuration>

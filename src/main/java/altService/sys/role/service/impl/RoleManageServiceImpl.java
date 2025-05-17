@@ -1,4 +1,4 @@
-package altService.sys.auth.service.impl;
+package altService.sys.role.service.impl;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -8,25 +8,25 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import altService.sys.auth.service.AuthManageService;
-import altService.sys.auth.service.AuthManageVO;
+import altService.sys.role.service.RoleManageService;
+import altService.sys.role.service.RoleManageVO;
 import altService.utils.PageMaker;
 import altService.utils.SearchCriteria;
 
 @Service
-public class AuthManageServiceImpl implements AuthManageService {
+public class RoleManageServiceImpl implements RoleManageService {
 	
 	@Autowired
-	private AuthMapper aMapper;
+	private RoleManageMapper rMapper;
 
 	@Override
-	public Map<String, Object> getAuthManageList(SearchCriteria cri) throws SQLException {
+	public Map<String, Object> getRoleManageList(SearchCriteria cri) throws SQLException {
 		Map<String, Object> dataMap = new HashMap<>();
-		List<AuthManageVO> list = null;
+		List<RoleManageVO> list = null;
 		int totalCount = 0;
 		
-		list = aMapper.selectAuthManageList(cri);
-		totalCount = aMapper.selectAuthManageListCnt(cri);
+		list = rMapper.selectRoleManageList(cri);
+		totalCount = rMapper.selectRoleManageListCnt(cri);
 		
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -35,7 +35,7 @@ public class AuthManageServiceImpl implements AuthManageService {
 		dataMap.put("list", list);
 		dataMap.put("cri", cri);
 		dataMap.put("pageMaker", pageMaker);
-				
+		
 		return dataMap;
 	}
 

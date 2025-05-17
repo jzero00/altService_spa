@@ -1,8 +1,8 @@
-package altService.sys.auth.service;
+package altService.sys.author.service;
 
 import java.util.Date;
 
-public class AuthManageVO {
+public class AuthorManageVO {
 
 	private String author_code;
 	private String author_nm;
