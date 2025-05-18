@@ -23,7 +23,7 @@
 								<button type="button" class="btn bg-gradient-primary" onclick="searchRole(); return false;">조회</button>
 							</div>
 							<div class="btn-group">
-								<button type="button" class="btn bg-gradient-primary" onclick="searchMember(); return false;">삭제</button>
+								<button type="button" class="btn bg-gradient-primary" onclick="deleteRole(); return false;">삭제</button>
 							</div>
 							<div class="btn-group">
 								<button type="button" class="btn bg-gradient-primary" onclick="registRole(); return false;">등록</button>
@@ -36,7 +36,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="text-center" style="width: 10px"><input type="checkbox"></th>
+					<th class="text-center" style="width: 10px"><input type="checkbox" onclick="checkAll(this);"></th>
 					<th class="text-center">롤 ID</th>
 					<th class="text-center">롤명</th>
 					<th class="text-center">롤 타입</th>
@@ -49,7 +49,7 @@
 			<tbody>
 				<c:forEach items="${list}" var="list">
 					<tr id="" onclick="getRoleDtl(this); return false;">
-						<td class="text-center"><input type="checkbox" onclick="checkbox(this,event)"></td>
+						<td class="text-center" onclick="checkbox(this,event)"><input type="checkbox" class="checkbox"></td>
 						<td class="text-center" id="id">${list.role_code }</td>
 						<td class="text-center">${list.role_nm }</td>
 						<td class="text-center">${list.role_ty }</td>
@@ -114,29 +114,27 @@
 		event.stopPropagation();
 	}
 
-	function deleteMember() {
-		if (confirm("삭제하시겠습니까?")) {
-			let checkedBoxes = document.querySelectorAll("input[type=checkbox]:checked");
+	function deleteRole(){
+		if(confirm("삭제하시겠습니까?")){
+			let checkedBoxes = document.querySelectorAll("input[class=checkbox]:checked");
 			let tr = '';
 			let deletedIds = new Array();
 			console.log(checkedBoxes);
-			for (i = 0; i < checkedBoxes.length - 1; i++) {
+			for (i = 0; i < checkedBoxes.length; i++) {
 				tr = checkedBoxes[i].parentElement.parentElement;
-				console.log(tr);
-				console.log(tr.querySelector("td:nth-child(3)").innerHTML);
-				deletedIds.push(tr.querySelector("td:nth-child(3)").innerHTML);
+				console.log(tr.querySelector("td:nth-child(2)").innerHTML);
+				deletedIds.push(tr.querySelector("td:nth-child(2)").innerHTML);
 			}
-			console.log(deletedIds);
-
- 			$.ajax({
-				url : '/sys/memberDelete.do',
+			
+			$.ajax({
+				url : '/sys/roleManageDel.do',
 				method : 'post',
 				data : {
 					'id' : deletedIds.toString()
 				},
 				success : function(data) {
 					alert("삭제 완료했습니다.");
-					getUrl("/sys/memberManage.do");
+					getUrl("/sys/roleManage.do");
 				},
 				error : function(request, status, error) {
 					alert("code:" + request.status + "\n" + "message:"	+ request.responseText + "\n" + "error:" + error);
@@ -146,5 +144,24 @@
 			});
 		}
 	}
+	
+	window.addEventListener("DOMContentLoaded",function(){
+	 	checkAll();
+	})
+	function checkAll(e){
+		let flag = e.checked;
+		let checkboxes = document.querySelectorAll("input[class=checkbox]");
+		if(flag){
+			checkboxes.forEach(function(e){
+				e.checked = true;
+			})
+		} else{
+			checkboxes.forEach(function(e){
+				e.checked = false;
+			})
+		}
+	}
+	
+	
 </script>
 </html>

@@ -46,4 +46,9 @@
 		role_sort = #{role_sort}
 		WHERE role_code = #{role_code}
 	</update>
+	
+	<delete id="deleteRoleManage" parameterType="str">
+		DELETE FROM altservice.comtnroleinfo
+		WHERE role_code = #{role_code}
+	</delete>
 </mapper>

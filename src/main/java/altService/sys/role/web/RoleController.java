@@ -122,4 +122,22 @@ public class RoleController {
 		
 		return resMap;
 	}
+	
+	@PostMapping("/roleManageDel.do")
+	@ResponseBody
+	public Map<String, Object> roleManageDel(String id){
+		Map<String,Object> resMap = new HashMap<>();
+		
+		try {
+			rService.removeRoleManage(id);
+			resMap.put("result", "롤 삭제 완료");
+			resMap.put("status", HttpStatus.OK);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			resMap.put("result", "내부 서버 오류");
+			resMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return resMap;
+	}
 }

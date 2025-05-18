@@ -14,5 +14,7 @@ public interface RoleManageService {
 	public RoleManageVO getRoleManageDetail(RoleManageVO vo) throws SQLException;
 
 	public void modifyRoleManage(Map<String, Object> paramMap) throws SQLException;
+
+	public void removeRoleManage(String id) throws SQLException;
 	
 }

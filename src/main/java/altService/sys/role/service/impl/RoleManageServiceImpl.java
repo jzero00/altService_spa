@@ -58,4 +58,12 @@ public class RoleManageServiceImpl implements RoleManageService {
 		rMapper.updateRoleManage(vo);
 	}
 
+	@Override
+	public void removeRoleManage(String ids) throws SQLException {
+		String[] array = ids.split(",");
+		for(String role_code : array) {
+			rMapper.deleteRoleManage(role_code);
+		}
+	}
+
 }
