@@ -26,7 +26,7 @@ public class RoleController {
 	private final String rootView = "/sys/role/";
 
 	@RequestMapping("/roleManage.do")
-	public ModelAndView getRoleManage(ModelAndView mnv, SearchCriteria cri) {
+	public ModelAndView roleManage(ModelAndView mnv, SearchCriteria cri) {
 		String url = rootView + "roleManage";
 		Map<String, Object> dataMap = null;
 		
@@ -43,7 +43,7 @@ public class RoleController {
 	}
 	
 	@RequestMapping("/roleManageRegView.do")
-	public ModelAndView getRoleManageRegView(ModelAndView mnv) {
+	public ModelAndView roleManageRegView(ModelAndView mnv) {
 		String url = rootView + "roleManageReg";
 		mnv.setViewName(url);
 		return mnv;
@@ -68,7 +68,7 @@ public class RoleController {
 	
 	
 	@PostMapping("/roleManageDtl.do")
-	public ModelAndView getRoleManageDtl(ModelAndView mnv, String role_code) {
+	public ModelAndView roleManageDtl(ModelAndView mnv, String role_code) {
 		String url = rootView + "roleManageDtl";
 		RoleManageVO reqVO = new RoleManageVO();
 		reqVO.setRole_code(role_code);
@@ -87,7 +87,7 @@ public class RoleController {
 	}
 	
 	@PostMapping("/roleManageModView.do")
-	public ModelAndView modifyRoleManageView(ModelAndView mnv, String role_code) {
+	public ModelAndView roleManageModView(ModelAndView mnv, String role_code) {
 		String url = rootView + "roleManageMod";
 		RoleManageVO reqVO = new RoleManageVO();
 		reqVO.setRole_code(role_code);
@@ -104,5 +104,22 @@ public class RoleController {
 		}
 		
 		return mnv;
+	}
+	
+	@PostMapping("/roleManageMod.do")
+	@ResponseBody
+	public Map<String, Object> roleManageMod(RoleManageVO vo){
+		Map<String, Object> paramMap = new HashMap<>();
+		Map<String, Object> resMap = new HashMap<>();
+		paramMap.put("vo", vo);
+		
+		try {
+			rService.modifyRoleManage(paramMap);
+			resMap.put("status", HttpStatus.OK);
+		} catch (SQLException e) {
+			resMap.put("status", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return resMap;
 	}
 }

@@ -52,4 +52,10 @@ public class RoleManageServiceImpl implements RoleManageService {
 		rMapper.insertRoleManage(vo);
 	}
 
+	@Override
+	public void modifyRoleManage(Map<String, Object> paramMap) throws SQLException {
+		RoleManageVO vo = (RoleManageVO) paramMap.get("vo");
+		rMapper.updateRoleManage(vo);
+	}
+
 }

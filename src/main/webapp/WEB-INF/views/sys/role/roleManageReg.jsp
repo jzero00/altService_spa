@@ -14,10 +14,10 @@
 			type : "post",
 			success : function(res){
 				console.log(res);
-				alert("사용자 등록 완료되었습니다.");
+				alert("롤 등록 완료되었습니다.");
 				getUrl("/sys/roleManage.do");
 			}
-		})
+		});
 	}
 
 	function getRoleList() {

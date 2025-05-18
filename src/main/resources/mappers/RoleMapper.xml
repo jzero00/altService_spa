@@ -35,4 +35,15 @@
 		FROM altservice.comtnroleinfo
 		WHERE role_code = #{role_code}
 	</select>
+	
+	<update id="updateRoleManage" parameterType="role">
+		UPDATE altservice.comtnroleinfo
+		SET
+		role_nm = #{role_nm},
+		role_pttrn = #{role_pttrn},
+		role_dc = #{role_dc},
+		role_ty = #{role_ty},
+		role_sort = #{role_sort}
+		WHERE role_code = #{role_code}
+	</update>
 </mapper>

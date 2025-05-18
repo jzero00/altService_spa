@@ -15,5 +15,7 @@ public interface RoleManageMapper {
 	public int selectRoleManageListCnt(SearchCriteria cri) throws SQLException;
 
 	public RoleManageVO selectRoleManageDetail(RoleManageVO vo) throws SQLException;
+
+	public void updateRoleManage(RoleManageVO vo) throws SQLException;
 	
 }

@@ -11,6 +11,8 @@ public interface RoleManageService {
 
 	public Map<String, Object> getRoleManageList(SearchCriteria cri) throws SQLException;
 
-	public RoleManageVO getRoleManageDetail(RoleManageVO vo) throws SQLException;;
+	public RoleManageVO getRoleManageDetail(RoleManageVO vo) throws SQLException;
+
+	public void modifyRoleManage(Map<String, Object> paramMap) throws SQLException;
 	
 }

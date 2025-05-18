@@ -8,7 +8,16 @@
 <script>
 	function modifyRole() {
 		let formData = $("#form").serialize();
-		postUrl("/sys/roleManageModView.do", formData);
+		$.ajax({
+			url : "/sys/roleManageMod.do",
+			data : formData,
+			type : "post",
+			success : function(res){
+				console.log(res);
+				alert("롤 수정 완료되었습니다.");
+				getUrl("/sys/roleManage.do");
+			}
+		});
 	}
 
 	function getRoleList() {
@@ -22,7 +31,7 @@
 			<div class="container-fluid">
 				<div class="card card-info">
 					<div class="card-header">
-						<h3 class="card-title">롤관리 등록</h3>
+						<h3 class="card-title">롤관리 수정</h3>
 					</div>
 					<div class="card-body">
 						<div class="form-group">
@@ -39,7 +48,7 @@
 									<label for="role_nm" class="col-form-label">롤 명</label>
 								</div>
 								<div class="col-9">
-									<input type="text" class="form-control" name="role_code" value="${vo.role_nm }">
+									<input type="text" class="form-control" name="role_nm" value="${vo.role_nm }">
 								</div>
 							</div>
 						</div>
