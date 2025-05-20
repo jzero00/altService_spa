@@ -84,14 +84,6 @@
 		postUrl("/sys/roleManageDtl.do",data);
 	}
 	
-// 	function getRole(e, event){
-// 		event.preventDefault();
-// 		console.log($(e).closest("tr").children("td").eq(1).text());
-// 		let author = $(e).closest("tr").children("td").eq(1).text();
-// 		let data = {"author" : author};
-// 		post("/sys/authorRoleList.do", data);
-// 	}
-
 	function searchRole() {
 		let keyword = document.querySelector("input[id=keyword]").value;
 		document.roleManageVO.querySelector("input[id=keyword]").value = keyword;

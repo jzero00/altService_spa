@@ -15,7 +15,7 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form id="frm" name="frm" method="post" action="/excel/registMenu.do" enctype="multipart/form-data">
+				<form id="frm" name="frm" method="post" action="/excel/registMember.do" enctype="multipart/form-data">
 					<div class="card-body">
 							<div class="form-group">
 						<div class="row">

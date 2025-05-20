@@ -66,7 +66,7 @@
 			<thead>
 				<tr>
 					<th class="text-center">번호</th>
-					<th class="text-center" style="width: 10px"><input type="checkbox"></th>
+					<th class="text-center" style="width: 10px"><input type="checkbox" onclick="checkAll(this);"></th>
 					<th class="text-center">ID</th>
 					<th class="text-center">사용자이름</th>
 					<th class="text-center">사용자이메일</th>
@@ -79,7 +79,7 @@
 				<c:forEach items="${list}" var="list">
 					<tr id="" onclick="memberManageDtl(this); return false;">
 						<td class="text-center">${list.list_no }</td>
-						<td class="text-center"><input type="checkbox" onclick="checkbox(this,event)"></td>
+						<td class="text-center" onclick="checkbox(this,event)"><input type="checkbox" class="checkbox"></td>
 						<td class="text-center" id="id">${list.emplyr_id }</td>
 						<td class="text-center">${list.user_nm }</td>
 						<td class="text-center">${list.email_adres }</td>
@@ -143,11 +143,11 @@
 
 	function deleteMember() {
 		if (confirm("삭제하시겠습니까?")) {
-			let checkedBoxes = document.querySelectorAll("input[type=checkbox]:checked");
+			let checkedBoxes = document.querySelectorAll("input[class=checkbox]:checked");
 			let tr = '';
 			let deletedIds = new Array();
 			console.log(checkedBoxes);
-			for (i = 0; i < checkedBoxes.length - 1; i++) {
+			for (i = 0; i < checkedBoxes.length; i++) {
 				tr = checkedBoxes[i].parentElement.parentElement;
 				console.log(tr);
 				console.log(tr.querySelector("td:nth-child(3)").innerHTML);
@@ -182,6 +182,23 @@
 
 	function registMemberExcel() {
 		getUrl("/sys/registMemberManageExcelView.do");
+	}
+	
+	window.addEventListener("DOMContentLoaded",function(){
+	 	checkAll();
+	})
+	function checkAll(e){
+		let flag = e.checked;
+		let checkboxes = document.querySelectorAll("input[class=checkbox]");
+		if(flag){
+			checkboxes.forEach(function(e){
+				e.checked = true;
+			})
+		} else{
+			checkboxes.forEach(function(e){
+				e.checked = false;
+			})
+		}
 	}
 </script>
 </html>
