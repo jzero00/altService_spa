@@ -33,7 +33,7 @@ public class ExcelController {
 	private MenuManageService menuService;
 
 	@SuppressWarnings("resource")
-	@PostMapping("/insertMember.do")
+	@PostMapping("/registMember.do")
 	public ModelAndView insertMemberExcel(ModelAndView mnv, MultipartFile excelFile) throws IOException {
 		/*엑셀파일 처리 */
 		Workbook workbook = new HSSFWorkbook(excelFile.getInputStream());
