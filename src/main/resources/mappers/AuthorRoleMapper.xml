@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="altService.sys.authorRole.service.impl.AuthorRoleMapper">
+	
+	<select id="selectAuthorRoleList" parameterType="str">		
+		SELECT a.*, au.creat_dt
+		FROM
+			(SELECT a.author_code, r.role_code, r.role_nm, r.role_ty,  r.role_sort, r.role_dc
+			 FROM altservice.COMTNAUTHORINFO a, altservice.comtnroleinfo r
+			 WHERE a.author_code = #{author_code}) a 
+		LEFT JOIN altservice.comtnauthorrolerelate au
+		ON a.author_code = au.author_code
+	</select>
+	
+</mapper>

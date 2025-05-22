@@ -16,6 +16,7 @@
 		<typeAlias type="altService.sys.member.service.MemberManageVO" alias="memberManage"/>
 		<typeAlias type="altService.sys.author.service.AuthorManageVO" alias="authManage"/>
 		<typeAlias type="altService.sys.role.service.RoleManageVO" alias="role"/>
+		<typeAlias type="altService.sys.authorRole.service.AuthorRoleManageVO" alias="authorRole"/>
 		
 	</typeAliases>
 </configuration>
