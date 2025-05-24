@@ -1,3 +1,4 @@
+
 package altService.sys.author.web;
 
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public class AuthManageController {
 	@Autowired
 	private AuthorManageService aService;
 	
-	@RequestMapping("/authManage.do")
+	@RequestMapping("/authorManage.do")
 	public ModelAndView authManage(ModelAndView mnv, SearchCriteria cri) {
 		String url = rootView + "authManage";
 		Map<String, Object> dataMap = null;
