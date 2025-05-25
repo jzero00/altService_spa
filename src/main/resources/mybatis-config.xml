@@ -17,6 +17,8 @@
 		<typeAlias type="altService.sys.author.service.AuthorManageVO" alias="authManage"/>
 		<typeAlias type="altService.sys.role.service.RoleManageVO" alias="role"/>
 		<typeAlias type="altService.sys.authorRole.service.AuthorRoleManageVO" alias="authorRole"/>
+		<typeAlias type="altService.sys.authorRole.service.AuthorRoleListDTO" alias="authorRoleListDTO"/>
+		
 		
 	</typeAliases>
 </configuration>

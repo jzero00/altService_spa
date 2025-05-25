@@ -9,8 +9,8 @@
 			<tr>
 				<th>
 					<div class="row">
-						<div class="col-4">권한관리 목록</div>
-						<div class="col-8">권한명 검색창</div>
+						<div class="col-4">권한롤관리 목록</div>
+						<div class="col-8">권한코드 : 검색창</div>
 					</div>
 				</th>
 			</tr>
@@ -19,26 +19,31 @@
 			<thead>
 				<tr>
 					<th class="text-center" style="width: 10px"><input type="checkbox"></th>
-					<th class="text-center">권한 ID</th>
-					<th class="text-center">권한명</th>
-					<th class="text-center">설명</th>
+					<th class="text-center">롤 ID</th>
+					<th class="text-center">롤명</th>
+					<th class="text-center">롤 타입</th>
+					<th class="text-center">롤 sort</th>
+					<th class="text-center">롤 설명</th>
 					<th class="text-center">등록일</th>
-					<th class="text-center">롤정보</th>
+					<th class="text-center">등록여부</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${list}" var="list">
 					<tr id="" onclick="getAuthDtl(this); return false;">
 						<td class="text-center"><input type="checkbox" onclick="checkbox(this,event)"></td>
-						<td class="text-center" id="id">${list.author_code }</td>
-						<td class="text-center">${list.author_nm }</td>
-						<td class="text-center">${list.author_dc }</td>
-						<td class="text-center"><fmt:formatDate value="${list.author_creat_de }" pattern="yyyy-MM-dd" /></td>
+						<td class="text-center" id="id">${list.role_code }</td>
+						<td class="text-center">${list.role_nm }</td>
+						<td class="text-center">${list.role_ty }</td>
+						<td class="text-center">${list.role_sort }</td>
+						<td class="text-center">${list.role_dc }</td>
+						<td class="text-center"><fmt:formatDate value="${list.creat_dt }" pattern="yyyy-MM-dd" /></td>
 						<td class="text-center">
-							<a href="#" class="text-muted" onclick="getRole(this,event)">
-	                        <i class="fas fa-search"></i>
-	                        </a>
-                        </td>
+							<select class="custom-select" name="sexdstn_code">
+								<option <c:if test="${list.creat_dt eq null }">selected</c:if>>미등록</option>
+								<option <c:if test="${list.creat_dt ne null }">selected</c:if>>등록</option>
+							</select>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -66,8 +71,8 @@
 		event.preventDefault();
 		console.log($(e).closest("tr").children("td").eq(1).text());
 		let author = $(e).closest("tr").children("td").eq(1).text();
-		let data = {"keyword" : author};
-		postUrl("/sys/authorRoleManage.do", data);
+		let data = {"author" : author};
+		post("/sys/authorRoleList.do", data);
 	}
 
 	function searchMember() {

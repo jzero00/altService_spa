@@ -1,16 +1,18 @@
 package altService.sys.authorRole.web;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import altService.sys.authorRole.service.AuthorRoleService;
 import altService.utils.SearchCriteria;
 
-//@RequestMapping("/sys")
-//@Controller
+@RequestMapping("/sys")
+@Controller
 public class AuthorRoleController {
 
 	private final String rootView = "/sys/authorRole/";
@@ -18,11 +20,19 @@ public class AuthorRoleController {
 	@Autowired
 	private AuthorRoleService arService;
 	
-	@RequestMapping("/authorRole.do")
-	public ModelAndView authorRole(ModelAndView mnv, SearchCriteria cri) {
+	@RequestMapping("/authorRoleManage.do")
+	public ModelAndView authorRole(ModelAndView mnv, SearchCriteria cri, String keyword) {
 		String url = rootView + "authorRoleManage";
 		Map<String, Object> dataMap = null;
+		cri.setKeyword(keyword);
 		
+		try {
+			dataMap = arService.getAuthorRoleManageList(cri);
+			mnv.addAllObjects(dataMap);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		mnv.setViewName(url);
 		return mnv;
