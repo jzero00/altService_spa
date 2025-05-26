@@ -10,7 +10,7 @@
 				<th>
 					<div class="row">
 						<div class="col-4">권한롤관리 목록</div>
-						<div class="col-8">권한코드 : 검색창</div>
+						<div class="col-8">권한코드 <input type="text" class="form-control" name="keyword" value="${cri.keyword }"></div>
 					</div>
 				</th>
 			</tr>
