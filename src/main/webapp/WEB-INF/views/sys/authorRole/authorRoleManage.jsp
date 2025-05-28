@@ -10,7 +10,25 @@
 				<th>
 					<div class="row">
 						<div class="col-4">권한롤관리 목록</div>
-						<div class="col-8">권한코드 <input type="text" class="form-control" name="keyword" value="${cri.keyword }"></div>
+						<div class="col-4">
+							<div class="form-group row">
+								<label for="menu" class="col-sm-3 col-form-label">권한코드</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control" name="keyword" value="${cri.keyword }" readonly>
+								</div>
+								</div>
+							</div>
+						<div class="col-4">
+							<div class="btn-group">
+								<button type="button" class="btn bg-gradient-primary" onclick="searchAuthorRole(); return false;">조회</button>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="btn bg-gradient-primary" onclick="registMember(); return false;">목록</button>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="btn bg-gradient-primary" onclick="registAuthorRole(); return false;">등록</button>
+							</div>
+						</div>
 					</div>
 				</th>
 			</tr>
@@ -31,7 +49,7 @@
 			<tbody>
 				<c:forEach items="${list}" var="list">
 					<tr id="" onclick="getAuthDtl(this); return false;">
-						<td class="text-center"><input type="checkbox" onclick="checkbox(this,event)"></td>
+						<td class="text-center"><input type="checkbox" onclick="checkbox(this,event)" class="checkbox"></td>
 						<td class="text-center" id="id">${list.role_code }</td>
 						<td class="text-center">${list.role_nm }</td>
 						<td class="text-center">${list.role_ty }</td>
@@ -61,12 +79,6 @@
 	</div>
 </body>
 <script>
-	function getAuthDtl(e) {
-/* 		let id = e.querySelector("td[id=id]").innerHTML;
-		let data = {"id" : id};
-		postUrl("/sys/memberDtl.do",data); */
-	}
-	
 	function getRole(e, event){
 		event.preventDefault();
 		console.log($(e).closest("tr").children("td").eq(1).text());
@@ -99,8 +111,11 @@
 		postUrl("/sys/memberManage.do",formData);
 	}
 
-	function registMember() {
-		getUrl("/sys/memberRegView.do");
+	function registAuthorRole() {
+		if(confirm("권한 등록하시겠습니까?")){
+			let checkedEl = document.querySelectorAll("input[class=checkbox]:checked");
+			console.log(checkedEl);
+		}
 	}
 
 	function checkbox(e, event) {
