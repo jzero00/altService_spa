@@ -1,11 +1,16 @@
 package altService.sys.authorRole.web;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import altService.sys.authorRole.service.AuthorRoleService;
@@ -36,5 +41,14 @@ public class AuthorRoleController {
 		
 		mnv.setViewName(url);
 		return mnv;
+	}
+	
+	@ResponseBody
+	@PostMapping("/authorRoleReg.do")
+	public Map<String, Object> authorRoleReg(@RequestBody HashMap<String, Object> paramMap){
+		Map<String, Object> resMap = new HashMap<>();
+		System.out.println(paramMap);
+		
+		return resMap;
 	}
 }

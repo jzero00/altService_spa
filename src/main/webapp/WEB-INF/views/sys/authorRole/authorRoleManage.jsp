@@ -81,7 +81,6 @@
 <script>
 	function getRole(e, event){
 		event.preventDefault();
-		console.log($(e).closest("tr").children("td").eq(1).text());
 		let author = $(e).closest("tr").children("td").eq(1).text();
 		let data = {"author" : author};
 		post("/sys/authorRoleList.do", data);
@@ -115,6 +114,30 @@
 		if(confirm("권한 등록하시겠습니까?")){
 			let checkedEl = document.querySelectorAll("input[class=checkbox]:checked");
 			console.log(checkedEl);
+			let checkedRole = new Array();
+			checkedEl.forEach(function(el, index){
+				let tr = el.parentNode.parentNode;
+				let role_id = tr.querySelector("td[id=id]").innerHTML;
+				checkedRole.push(role_id);
+			});
+			console.log(checkedRole);			
+			let role_code = document.querySelector("input[name=keyword]").value;
+			console.log(role_code);
+			
+			let data = {"role_code" : role_code, "role_id" : checkedRole};
+			console.log(data);
+			
+			
+			$.ajax({
+				url : "/sys/authorRoleReg.do",
+				type : "post",
+				data : JSON.stringify(data),
+				dataType: "json",
+		        contentType: "application/json",
+				success : function(res){
+					
+				}
+			})
 		}
 	}
 
