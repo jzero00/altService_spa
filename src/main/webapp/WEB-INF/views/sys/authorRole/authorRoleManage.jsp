@@ -121,10 +121,10 @@
 				checkedRole.push(role_id);
 			});
 			console.log(checkedRole);			
-			let role_code = document.querySelector("input[name=keyword]").value;
-			console.log(role_code);
+			let author_code = document.querySelector("input[name=keyword]").value;
+			console.log(author_code);
 			
-			let data = {"role_code" : role_code, "role_id" : checkedRole};
+			let data = {"author_code" : author_code, "role_id" : checkedRole};
 			console.log(data);
 			
 			
@@ -135,7 +135,8 @@
 				dataType: "json",
 		        contentType: "application/json",
 				success : function(res){
-					
+					alert("롤 권한 등록되었습니다.");
+					//url 변경 부분 수정 author_code도 같이 넘기도록
 				}
 			})
 		}

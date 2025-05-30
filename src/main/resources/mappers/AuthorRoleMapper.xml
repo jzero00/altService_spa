@@ -22,4 +22,10 @@
 		ON r.role_code = au.role_code
 	</select>
 	
+	<insert id="insertAuthorRole" parameterType="authorRole">
+		INSERT INTO altservice.comtnauthorrolerelate
+		(author_code, role_code, creat_dt)
+		VALUES(#{author_code}, #{ role_code}, now());
+	</insert>
+	
 </mapper>

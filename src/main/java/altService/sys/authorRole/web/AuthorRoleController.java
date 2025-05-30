@@ -2,7 +2,6 @@ package altService.sys.authorRole.web;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,13 @@ public class AuthorRoleController {
 	@PostMapping("/authorRoleReg.do")
 	public Map<String, Object> authorRoleReg(@RequestBody HashMap<String, Object> paramMap){
 		Map<String, Object> resMap = new HashMap<>();
-		System.out.println(paramMap);
+		
+		try {
+			arService.registAuthorRole(paramMap);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return resMap;
 	}
