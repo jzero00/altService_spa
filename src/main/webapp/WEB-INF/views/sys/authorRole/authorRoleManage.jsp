@@ -137,6 +137,9 @@
 				success : function(res){
 					alert("롤 권한 등록되었습니다.");
 					//url 변경 부분 수정 author_code도 같이 넘기도록
+					let role_code = document.querySelector("input[name=keyword]").value;
+					let paramData = {"keyword" : role_code};
+					postUrl("/sys/authorRoleManage.do", paramData);
 				}
 			})
 		}
