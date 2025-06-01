@@ -58,8 +58,8 @@
 						<td class="text-center"><fmt:formatDate value="${list.creat_dt }" pattern="yyyy-MM-dd" /></td>
 						<td class="text-center">
 							<select class="custom-select" name="sexdstn_code">
-								<option <c:if test="${list.creat_dt eq null }">selected</c:if>>미등록</option>
-								<option <c:if test="${list.creat_dt ne null }">selected</c:if>>등록</option>
+								<option value="n" <c:if test="${list.creat_dt eq null }">selected</c:if>>미등록</option>
+								<option value="y" <c:if test="${list.creat_dt ne null }">selected</c:if>>등록</option>
 							</select>
 						</td>
 					</tr>
@@ -70,8 +70,6 @@
 			<input type='hidden' name="page" value="${pageMaker.cri.page }" />
 			<input type="hidden" id="searchType" name="searchType" value="${cri.searchType }">
 			<input type="hidden" id="keyword" name="keyword" value="${cri.keyword }">
-<!-- 			<input type="hidden" id="id" name="id" value=""> -->
-<%-- 			<input type="hidden" id="stts" name="stts" value="${cri.stts }"> --%>
 		</form>
 		<ul class="pagination m-0 justify-content-center">
 			<%@include file="/WEB-INF/views/include/pagination.jsp"%>
@@ -180,14 +178,6 @@
 				}
 			});
 		}
-	}
-
-	function downloadExcelMember() {
-		location.href = "/download/memberManageExcel.do";
-	}
-
-	function registMemberExcel() {
-		getUrl("/sys/registMemberManageExcelView.do");
 	}
 </script>
 </html>
