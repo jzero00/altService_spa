@@ -28,4 +28,11 @@
 		VALUES(#{author_code}, #{ role_code}, now());
 	</insert>
 	
+	<delete id="deleteAuthorRole" parameterType="authorRole">
+		DELETE FROM altservice.comtnauthorrolerelate
+		WHERE
+		author_code = #{author_code}
+		AND 
+		role_code = #{role_code}
+	</delete>	
 </mapper>

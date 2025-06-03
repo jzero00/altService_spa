@@ -14,5 +14,7 @@ public interface AuthorRoleMapper {
 	public int selectAuthorRoleListCnt(SearchCriteria cri) throws SQLException;
 
 	public void insertAuthorRole(AuthorRoleManageVO vo) throws SQLException;
+
+	public void deleteAuthorRole(AuthorRoleManageVO vo) throws SQLException;
 	
 }

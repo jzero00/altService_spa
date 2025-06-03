@@ -43,14 +43,29 @@ public class AuthorRoleServiceImpl implements AuthorRoleService {
 	@Override
 	public void registAuthorRole(HashMap<String, Object> paramMap) throws SQLException {
 		List<String> role_id = (List<String>) paramMap.get("role_id");
+		List<Boolean> sttsFlag = (List<Boolean>) paramMap.get("sttsFlag");
 		String author_code = (String) paramMap.get("author_code");
 		
-		for(String id : role_id) {
+		for(int i = 0; i < sttsFlag.size(); i++) {
+			AuthorRoleManageVO vo = new AuthorRoleManageVO();
+			vo.setAuthor_code(author_code);
+			vo.setRole_code(role_id.get(i));
+			
+			if(sttsFlag.get(i) == true) {
+				arMapper.insertAuthorRole(vo);
+			} else {
+				arMapper.deleteAuthorRole(vo);
+			}
+		}
+		
+//		sttsFlag 리스트로 뽑아서 쓰기
+		
+		/*for(String id : role_id) {
 			AuthorRoleManageVO vo = new AuthorRoleManageVO();
 			vo.setRole_code(id);
 			vo.setAuthor_code(author_code);
 			arMapper.insertAuthorRole(vo);
-		}
+		}*/
 		
 	}
 
