@@ -32,7 +32,7 @@
 						</div>
 						<div class="col-4">
 							<div class="form-group row">
-								<label for="menu" class="col-sm-3 col-form-label">메뉴명 : </label>
+								<label class="col-sm-3 col-form-label">메뉴명 : </label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" id="keyword" value="${cri.keyword }">
 								</div>
@@ -124,7 +124,7 @@
 	}
 
 	function resetMember() {
-		getUrl("'/sys/memberManage.do'");
+		getUrl("/sys/memberManage.do");
 	}
 
 	function search_list_go(pageNo) {

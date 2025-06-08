@@ -12,7 +12,7 @@
 						<div class="col-6">롤관리 목록</div>
 						<div class="col-3">
 							<div class="form-group row">
-								<label for="menu" class="col-sm-4 col-form-label">롤명 : </label>
+								<label class="col-sm-4 col-form-label">롤명 : </label>
 								<div class="col-sm-8">
 									<input type="text" class="form-control" id="keyword" value="${cri.keyword }">
 								</div>

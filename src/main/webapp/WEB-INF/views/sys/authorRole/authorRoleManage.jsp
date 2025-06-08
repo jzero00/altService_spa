@@ -12,7 +12,7 @@
 						<div class="col-4">권한롤관리 목록</div>
 						<div class="col-4">
 							<div class="form-group row">
-								<label for="menu" class="col-sm-3 col-form-label">권한코드</label>
+								<label class="col-sm-3 col-form-label">권한코드</label>
 								<div class="col-sm-9">
 								<input type="text" class="form-control" name="keyword" value="${cri.keyword }" readonly>
 								</div>
@@ -57,7 +57,7 @@
 						<td class="text-center">${list.role_dc }</td>
 						<td class="text-center"><fmt:formatDate value="${list.creat_dt }" pattern="yyyy-MM-dd" /></td>
 						<td class="text-center">
-							<select class="custom-select" name="sexdstn_code">
+							<select class="custom-select" name="creat_dt">
 								<option value="n" <c:if test="${list.creat_dt eq null }">selected</c:if>>미등록</option>
 								<option value="y" <c:if test="${list.creat_dt ne null }">selected</c:if>>등록</option>
 							</select>
@@ -66,14 +66,24 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<form name="authManageVO" method="post" id="form">
+		<form name="authorRoleManageVO" method="post" id="form">
 			<input type='hidden' name="page" value="${pageMaker.cri.page }" />
 			<input type="hidden" id="searchType" name="searchType" value="${cri.searchType }">
 			<input type="hidden" id="keyword" name="keyword" value="${cri.keyword }">
 		</form>
-		<ul class="pagination m-0 justify-content-center">
+		<div class="card-footer clearfix">
+                <ul class="pagination m-1 justify-content-center">
 			<%@include file="/WEB-INF/views/include/pagination.jsp"%>
-		</ul>
+<!--                   <li class="page-item"><a class="page-link" href="#">«</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">»</a></li> -->
+                </ul>
+              </div>
+<!-- 		<ul class="pagination m-0 justify-content-center"> -->
+<%-- 			<%@include file="/WEB-INF/views/include/pagination.jsp"%> --%>
+<!-- 		</ul> -->
 	</div>
 </body>
 <script>
@@ -81,31 +91,13 @@
 		event.preventDefault();
 		let author = $(e).closest("tr").children("td").eq(1).text();
 		let data = {"author" : author};
-		post("/sys/authorRoleList.do", data);
-	}
-
-	function searchMember() {
-		let searchType = document.querySelector("select[id=searchType]").value;
-		let keyword = document.querySelector("input[id=keyword]").value;
-		let emplyrSttusCode = document	.querySelector("select[id=emplyrSttusCode]").value;
-
-		document.memberManageVO.querySelector("input[id=searchType]").value = searchType;
-		document.memberManageVO.querySelector("input[id=keyword]").value = keyword;
-		document.memberManageVO.querySelector("input[id=stts]").value = emplyrSttusCode;
-
-		
-		let formData = $("#form").serialize();
-		postUrl("/sys/memberManage.do",formData);
-	}
-
-	function resetMember() {
-		getUrl("'/sys/memberManage.do'");
+		post("/sys/authorRoleManage.do", data);
 	}
 
 	function search_list_go(pageNo) {
-		document.memberManageVO.querySelector("input[name=page]").value = pageNo;
+		document.authorRoleManageVO.querySelector("input[name=page]").value = pageNo;
 		let formData = $("#form").serialize();
-		postUrl("/sys/memberManage.do",formData);
+		postUrl("/sys/authorRoleManage.do",formData);
 	}
 
 	function registAuthorRole() {
@@ -113,20 +105,26 @@
 			let checkedEl = document.querySelectorAll("input[class=checkbox]:checked");
 			console.log(checkedEl);
 			let checkedRole = new Array();
+			let regSttsFlag = new Array();
 			checkedEl.forEach(function(el, index){
 				let tr = el.parentNode.parentNode;
 				let role_id = tr.querySelector("td[id=id]").innerHTML;
+				let regStts = tr.querySelector("select[name=creat_dt]").value;
+				if(regStts == 'n'){
+					regSttsFlag.push(false);
+				} else if (regStts == 'y'){
+					regSttsFlag.push(true);
+				}
 				checkedRole.push(role_id);
 			});
 			console.log(checkedRole);			
 			let author_code = document.querySelector("input[name=keyword]").value;
 			console.log(author_code);
 			
-			let data = {"author_code" : author_code, "role_id" : checkedRole};
+			let data = {"author_code" : author_code, "role_id" : checkedRole, "sttsFlag" : regSttsFlag};
 			console.log(data);
 			
-			
-			$.ajax({
+			 $.ajax({
 				url : "/sys/authorRoleReg.do",
 				type : "post",
 				data : JSON.stringify(data),

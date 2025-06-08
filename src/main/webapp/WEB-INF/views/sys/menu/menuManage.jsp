@@ -34,7 +34,7 @@
 							<div class="col-5"></div>
 							<div class="col-3">
 								<div class="form-group row">
-									<label for="menu" class="col-sm-3 col-form-label">메뉴명 : </label>
+									<label class="col-sm-3 col-form-label">메뉴명 : </label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control" id="menu">
 									</div>
