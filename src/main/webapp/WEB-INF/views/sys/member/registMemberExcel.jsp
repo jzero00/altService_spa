@@ -15,7 +15,7 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form id="frm" name="frm" method="post" action="/excel/registMember.do" enctype="multipart/form-data">
+				<form id="frm" name="frm" method="post" enctype="multipart/form-data">
 					<div class="card-body">
 							<div class="form-group">
 						<div class="row">
@@ -67,13 +67,39 @@
 	}
 
 	function registExcelFile() {
+		let fileInput = document.querySelector("input[type=file]");
+		let file = fileInput.files[0];
+		let form = new FormData();
+		form.append("excelFile",file);
+		
 		if (confirm("파일을 등록하시겠습니까?")) {
-			document.frm.submit();
+			
+// 			document.frm.submit();
+				$.ajax({
+					url : "/excel/registMember.do",
+					processData : false,
+					contentType : false,
+					data : form,
+					type : "post",
+					success : function(res){
+						alert(res.result);
+						getUrl(res.url);
+					}
+				})
 		}
 	}
 	
 	function downloadExcelMenu(){
 		location.href="/download/memberManageExcel.do";
+	}
+	
+	function fileCheck(file){
+		let flag = false;
+		if(file == null || file == ''){
+			flag = false;
+		} else {
+			flag = true;
+		}
 	}
 </script>
 </html>

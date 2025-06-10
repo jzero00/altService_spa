@@ -3,7 +3,9 @@ package altService.sys.excel.web;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +37,9 @@ public class ExcelController {
 
 	@SuppressWarnings("resource")
 	@PostMapping("/registMember.do")
-	public ModelAndView insertMemberExcel(ModelAndView mnv, MultipartFile excelFile) throws IOException {
+	@ResponseBody
+	public Map<String,Object> insertMemberExcel(MultipartFile excelFile) throws IOException {
+		Map<String, Object> res = new HashMap<>();
 		/*엑셀파일 처리 */
 		Workbook workbook = new HSSFWorkbook(excelFile.getInputStream());
 		Sheet worksheet = workbook.getSheetAt(0);
@@ -81,16 +86,19 @@ public class ExcelController {
 		/*중복체크는 service에서 처리 insert*/
 		try {
 			memberService.registMemberManageByExcel(list);
-			url = "/alert";
-			mnv.addObject("url", "/sys/memberManage.do");
-			mnv.addObject("result", "사용자 등록 완료");
+//			url = "/alert";
+			res.put("url", "/sys/memberManage.do");
+			res.put("result", "사용자 등록 완료");
+//			mnv.addObject("url", "/sys/memberManage.do");
+//			mnv.addObject("result", "사용자 등록 완료");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			res.put("url", "/505error.page\"");
+			res.put("result", "사용자 등록 실패");
 			url = "/505error.page";
 		}
-		mnv.setViewName(url);
-		return mnv;
+		return res;
 	}
 
 	@SuppressWarnings("resource")
